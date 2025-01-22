@@ -1,6 +1,6 @@
 const urlEventRating = "https://localhost:7160/api/EventRating";
 const urlEvent = "https://localhost:7160/api/Event";
-let eventId;
+var eventId;
 
 async function onLoad() {
     const urlParams = new URLSearchParams(window.location.search);
