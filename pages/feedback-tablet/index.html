@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="api.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+</head>
+<body onload="onLoad()">
+    <div id="feedback-response-container">
+        <span class="material-symbols-rounded feedback-button" id="feedback-success">check</span>
+        <span class="material-symbols-rounded feedback-button" id="feedback-failure">close</span>
+        <h2 id="feedback-response">Tak!</h2>
+        <div id="feedback-progress-bar"></div>
+    </div>
+    <h1>Giv os din mening.</h1>
+    <div id="feedback-button-container">
+        <span class="material-symbols-rounded feedback-button" id="button-bad" onclick="clickedFeedback(1, this)">sentiment_dissatisfied</span>
+        <span class="material-symbols-rounded feedback-button" id="button-neutral" onclick="clickedFeedback(2, this)">sentiment_neutral</span>
+        <span class="material-symbols-rounded feedback-button" id="button-good" onclick="clickedFeedback(3, this)">sentiment_satisfied</span>
+    </div>
+</body>
+</html>
