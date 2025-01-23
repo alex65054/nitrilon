@@ -69,20 +69,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
-
                     b.ToTable("EventRatings");
-                });
-
-            modelBuilder.Entity("Entities.EventRating", b =>
-                {
-                    b.HasOne("Entities.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
                 });
 #pragma warning restore 612, 618
         }

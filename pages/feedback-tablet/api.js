@@ -3,13 +3,23 @@ const urlEvent = "https://localhost:7160/api/Event";
 var eventId;
 
 async function onLoad() {
+    console.log("Connecting to API...");
     const urlParams = new URLSearchParams(window.location.search);
     let id = urlParams.get("eventId");
+    let darkMode = urlParams.get("darkMode");
+    if (darkMode != null) document.getElementById("dark-mode-switch").checked = true;
+    else document.getElementById("dark-mode-switch").checked = false;
 
     const valid = await isValidEvent(id);
 
-    if (!valid) showMessage(false, "Invalid event.", false);
-    else eventId = id;
+    if (!valid) {
+        showMessage(false, "Invalid event.", false);
+        console.log("Event ID is invalid.");
+    }
+    else {
+        eventId = id;
+        console.log("Connected to API and validated Event ID.");
+    }
 }
 
 async function clickedFeedback(rating, element) {
@@ -59,13 +69,16 @@ async function attemptFeedback(rating, eventId) {
             eventId: eventId,
             rating: rating
         }),
-        mode: 'cors'
+        mode: 'cors',
+        signal: AbortSignal.timeout(2000)
+    }).catch(error => {
+        console.log("Error: " + error);
+        return false;
     });
 
     if (result.ok) {
         return true;
     } else {
-        console.log("Error: " + result.body);
         return false;
     }
 }
@@ -82,7 +95,12 @@ function setMessage(isSuccessful, message) {
 
 async function isValidEvent(eventId) {
     if (eventId > 0) {
-        const result = await fetch(urlEvent + "/" + eventId);
+        const result = await fetch(urlEvent + "/" + eventId, {
+            signal: AbortSignal.timeout(2000)
+        }).catch((error) => {
+            console.log("Error: " + error);
+            return false;
+        });
         if (result.ok) return true;
     }
     else return false;

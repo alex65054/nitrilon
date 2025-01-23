@@ -11,33 +11,36 @@
 <body onload="onLoad()">
     <main>
         <section id="event-explorer-container">
-            <h2>Events</h2>
+            <div id="event-explorer-header">
+                <h2>Events</h2>
+                <label for="dark-mode-switch"><span>Dark mode</span><input type="checkbox" name="dark-mode" id="dark-mode-switch"></label>
+            </div>
             <div id="event-explorer">
-                <article>
-                    <div>
-                        <h6>Nitricon</h6>
-                        <p>2024-05-03</p>
-                    </div>
-                    <p>København</p>
-                </article>
-                <article>
-                    <div>
-                        <h6>Event 2</h6>
-                        <p>2024-05-03</p>
-                    </div>
-                    <p>København</p>
-                </article>
-                <article>
-                    <div>
-                        <h6>Event 3</h6>
-                        <p>2024-05-03</p>
-                    </div>
-                    <p>København</p>
-                </article>
+                <a href="." id="sync-error" class="material-symbols-rounded">sync_problem</a>
             </div>
         </section>
         <section id="feedback-view-container">
-            <p id="no-event-selected-text">No event selected.</p>
+            <article>
+                <h2>Overall rating</h2>
+                <p id="overall-rating-display">N/A</p>
+            </article>
+            <article id="feedback-view-individual-containers">
+                <div>
+                    <span class="material-symbols-rounded color-red">sentiment_dissatisfied</span>
+                    <h3 id="feedback-individual-display-amount-1">0</h3>
+                    <p id="feedback-individual-display-percentage-1">0%</h3>
+                </div>
+                <div>
+                    <span class="material-symbols-rounded color-yellow">sentiment_neutral</span>
+                    <h3 id="feedback-individual-display-amount-2">0</h3>
+                    <p id="feedback-individual-display-percentage-2">0%</h3>
+                </div>
+                <div>
+                    <span class="material-symbols-rounded color-green">sentiment_satisfied</span>
+                    <h3 id="feedback-individual-display-amount-3">0</h3>
+                    <p id="feedback-individual-display-percentage-3">0%</h3>
+                </div>
+            </article>
         </section>
     </main>
 </body>
