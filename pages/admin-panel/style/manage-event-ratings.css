@@ -1,0 +1,62 @@
+/* 
+    Feedback View (right side)
+*/
+
+#feedback-view-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    text-align: center;
+    overflow: scroll;
+}
+
+#feedback-view-individual-containers {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+#feedback-view-individual-containers>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#feedback-view-individual-containers span, 
+#feedback-view-individual-containers p, 
+#feedback-view-individual-containers h3,
+#overall-rating-display {
+    margin: 0;
+}
+
+#overall-rating-display {
+    font-size: 6rem;
+}
+
+
+#feedback-view-individual-containers h3 {
+    font-size: 6rem;
+}
+
+
+#feedback-view-individual-containers p {
+    font-size: 2rem;
+    color: var(--baseSecondaryText);
+}
+
+#feedback-view-individual-containers span {
+    font-size: 12rem;
+    user-select: none;
+    transition-property: scale;
+    transition-duration: 250ms;
+}
+
+#feedback-view-individual-containers>div span:hover {
+    scale: 1.05;
+}

@@ -68,7 +68,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<EventRating>> DeleteEventRating(int id)
+        public async Task<IActionResult> DeleteEventRating(int id)
         {
             var rating = await _context.EventRatings.FindAsync(id);
             if (rating == null) return BadRequest("No such event rating.");

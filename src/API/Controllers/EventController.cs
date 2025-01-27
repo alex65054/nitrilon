@@ -54,7 +54,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Event>> AddEvent(Event updatedEvent)
+        public async Task<ActionResult<Event>> UpdateEvent(Event updatedEvent)
         {
             var dbEvent = await _context.Events.FindAsync(updatedEvent.Id);
             if (dbEvent == null) return BadRequest("No such event.");
@@ -70,7 +70,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<Event>> DeleteEvent(int id)
+        public async Task<IActionResult> DeleteEvent(int id)
         {
             var dbEvent = await _context.Events.FindAsync(id);
             if (dbEvent == null) return BadRequest("No such event.");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250123091024_Initial2")]
-    partial class Initial2
+    [Migration("20250127085554_aslkjdfs")]
+    partial class aslkjdfs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,25 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EventId");
+
                     b.ToTable("EventRatings");
+                });
+
+            modelBuilder.Entity("Entities.EventRating", b =>
+                {
+                    b.HasOne("Entities.Event", "Event")
+                        .WithMany("EventRatings")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("Entities.Event", b =>
+                {
+                    b.Navigation("EventRatings");
                 });
 #pragma warning restore 612, 618
         }

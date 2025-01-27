@@ -13,7 +13,7 @@ class EventListObject {
     }
 
     createElement() {
-        var outer = document.getElementById("event-explorer");
+        var outer = document.getElementById("object-explorer");
 
         var input = document.createElement("input");
         input.type = "radio";
@@ -48,7 +48,31 @@ class EventListObject {
 }
 
 async function onLoad() {
-    updateEventList();
+    await updateEventList();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let id = urlParams.get("id");
+    let darkMode = urlParams.get("darkMode");
+    if (darkMode != null) document.getElementById("dark-mode-switch").checked = true;
+    else document.getElementById("dark-mode-switch").checked = false;
+
+    if (id != null && isValidEvent(id)) {
+        document.getElementById("object-selector-label-" + id);
+        updateFeedbackView(id);
+    }
+}
+
+async function isValidEvent(eventId) {
+    if (eventId > 0) {
+        const result = await fetch(urlEvent + "/" + eventId, {
+            signal: AbortSignal.timeout(2000)
+        }).catch((error) => {
+            console.log("Error: " + error);
+            return false;
+        });
+        if (result.ok) return true;
+    }
+    else return false;
 }
 
 function selectEvent(element) {
@@ -74,7 +98,6 @@ async function updateFeedbackView(eventId) {
     }
     
     for (var i = 1; i < responses.length+1; i++) {
-        console.log(responses[i-1].length + " / " + total);
         document.getElementById("feedback-individual-display-percentage-" + i).innerHTML = ((responses[i-1].length/total)*100).toFixed(0) + "%";
     }
 
@@ -99,7 +122,7 @@ async function updateEventList() {
 
     eventList = [];
 
-    document.getElementById("event-explorer").innerHTML = "";
+    document.getElementById("object-explorer").innerHTML = "";
 
     data.forEach(thing => {
         let newThing;

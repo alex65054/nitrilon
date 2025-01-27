@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="api.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/events-api.js"></script>
+    <link rel="stylesheet" href="./style/global.css">
+    <link rel="stylesheet" href="./style/manage-event-ratings.css">
     <!-- <link rel="icon" href="https://www.nitrilon.dk/wp-content/uploads/2024/02/Dice_Tegnebraet-1-300x300.png" sizes="192x192"> -->
     <title>Manage Event Ratings</title>
 </head>
 <body onload="onLoad()">
+    <input type="checkbox" name="dark-mode" id="dark-mode-switch">
     <main>
-        <section id="event-explorer-container">
-            <div id="event-explorer-header">
-                <h2>Events</h2>
-                <label for="dark-mode-switch"><span>Dark mode</span><input type="checkbox" name="dark-mode" id="dark-mode-switch"></label>
+        <section id="object-explorer-container">
+            <div id="object-explorer-header">
+                <div id="title-container">
+                    <h2>Events</h2>
+                    <span id="add-object" onclick="">+</span>
+                </div>
+                <div id="search-container">
+                    <span class="material-symbols-rounded">search</span>
+                    <input type="text" name="search" id="search">
+                </div>
             </div>
-            <div id="event-explorer">
-                <a href="." id="sync-error" class="material-symbols-rounded">sync_problem</a>
+            <div id="object-explorer">
+                <a id="sync-error" class="material-symbols-rounded" onclick="updateEventList()">sync_problem</a>
             </div>
         </section>
         <section id="feedback-view-container">

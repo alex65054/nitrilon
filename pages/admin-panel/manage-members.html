@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/global.css">
+    <link rel="stylesheet" href="./style/manage-members.css">
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/members-api.js"></script>
+    <title>Manage Members</title>
+</head>
+<body onload="onLoad()">
+    <input type="checkbox" name="dark-mode" id="dark-mode-switch">
+    <main>
+        <section id="object-explorer-container">
+            <div id="object-explorer-header">
+                <div id="title-container">
+                    <h2>Members</h2>
+                    <span id="add-object" onclick="">+</span>
+                </div>
+                <div id="search-container">
+                    <span class="material-symbols-rounded">search</span>
+                    <input type="text" name="search" id="search">
+                </div>
+            </div>
+            <div id="object-explorer">
+                <a id="sync-error" class="material-symbols-rounded" onclick="updateObjectList()">sync_problem</a>
+            </div>
+        </section>
+        <section id="object-view-container">
+            
+        </section>
+    </main>
+</body>
+</html>
