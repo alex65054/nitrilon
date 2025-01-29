@@ -3,29 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/global.css">
-    <link rel="stylesheet" href="./style/manage-members.css">
     <script src="./scripts/api.js"></script>
     <script src="./scripts/members-api.js"></script>
-    <title>Manage Members</title>
+    <link rel="stylesheet" href="./style/global.css">
+    <link rel="stylesheet" href="./style/manage-members.css">
+    <!-- <link rel="icon" href="https://www.nitrilon.dk/wp-content/uploads/2024/02/Dice_Tegnebraet-1-300x300.png" sizes="192x192"> -->
+    <title>Manage Event Ratings</title>
 </head>
-<body onload="onLoad()">
+<body onload="onLoad()" onpopstate="stateChanged()">
     <input type="checkbox" name="dark-mode" id="dark-mode-switch">
     <main>
         <section id="object-explorer-container">
             <div id="object-explorer-header">
                 <div id="title-container">
                     <h2>Members</h2>
-                    <span id="add-object" onclick="">+</span>
+                    <input id="add-object-input" type="radio" name="selected-object"/>
+                    <label id="add-object" for="add-object-input" class="material-symbols-rounded" onclick="prepareCreateEvent()">add</label>
                 </div>
-                <div id="search-container">
+                <div class="input-text-container">
                     <span class="material-symbols-rounded">search</span>
-                    <input type="text" name="search" id="search">
+                    <input type="text" name="search" id="search" onkeydown="trySearch(this)">
                 </div>
             </div>
             <div id="object-explorer">
-                <a id="sync-error" class="material-symbols-rounded" onclick="updateObjectList()">sync_problem</a>
+                <a id="sync-error" class="material-symbols-rounded" onclick="updateEventList()">sync_problem</a>
             </div>
+        </section>
+        <section id="object-create-container">
+            <form id="object-create-form" onsubmit="attemptCreateEvent(this)" action="javascript:void(0);">
+                <h2>Create member</h2>
+                <div>
+                    <article>
+                        <label for="creation-name">First name</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">bookmark</span>
+                            <input type="text" name="name" id="creation-name" required>
+                        </div>
+                    </article>
+                    <article>
+                        <label for="creation-name">First name</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">bookmark</span>
+                            <input type="text" name="name" id="creation-name" required>
+                        </div>
+                    </article>
+                </div>
+                <div>
+                    <article>
+                        <label for="creation-date">Date joined</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">calendar_month</span>
+                            <input type="date" name="date" id="creation-date" required>
+                        </div>
+                    </article>
+                </div>
+                <article>
+                    <label for="creation-location">Event location</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">location_on</span>
+                        <input type="text" name="location" id="creation-location" required>
+                    </div>
+                </article>
+                <article>
+                    <label for="creation-description">Event description</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">auto_stories</span>
+                        <input type="text" name="description" id="creation-description" required>
+                    </div>
+                </article>
+                <button type="submit">Create</button>
+                <p id="form-status-text"></p>
+            </form>
         </section>
         <section id="object-view-container">
             

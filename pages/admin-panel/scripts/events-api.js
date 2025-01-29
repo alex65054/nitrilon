@@ -2,6 +2,7 @@ const urlEventRating = "https://localhost:7160/api/EventRating";
 const urlEvent = "https://localhost:7160/api/Event";
 var selectedEvent;
 var eventList;
+var activeSearch = "";
 
 class EventListObject {
     constructor(id, name, date, location, description) {
@@ -17,8 +18,8 @@ class EventListObject {
 
         var input = document.createElement("input");
         input.type = "radio";
-        input.name = "selected-event";
-        input.id = "event-selector-label-" + this.id;
+        input.name = "selected-object";
+        input.id = "object-selector-label-" + this.id;
 
         outer.appendChild(input);
 
@@ -48,18 +49,9 @@ class EventListObject {
 }
 
 async function onLoad() {
-    await updateEventList();
+    await updateEventList("");
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let id = urlParams.get("id");
-    let darkMode = urlParams.get("darkMode");
-    if (darkMode != null) document.getElementById("dark-mode-switch").checked = true;
-    else document.getElementById("dark-mode-switch").checked = false;
-
-    if (id != null && isValidEvent(id)) {
-        document.getElementById("object-selector-label-" + id);
-        updateFeedbackView(id);
-    }
+    stateChanged();
 }
 
 async function isValidEvent(eventId) {
@@ -72,16 +64,21 @@ async function isValidEvent(eventId) {
         });
         if (result.ok) return true;
     }
-    else return false;
+    return false;
 }
 
 function selectEvent(element) {
-    var eventId = element.getAttribute("for").substring(21);
+    var eventId = element.getAttribute("for").substring(22);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("id", eventId)
+    if (url != window.location.href) history.pushState({}, "", url);
     
-    updateFeedbackView(eventId)
+    updateFeedbackView(eventId);
 }
 
 async function updateFeedbackView(eventId) {
+    switchViews(false);
     var responses = [];
     var total = 0;
     var overall = 0;
@@ -114,8 +111,10 @@ async function updateFeedbackView(eventId) {
     }
 }
 
-async function updateEventList() {
-    const response = await fetch(urlEvent);
+async function updateEventList(search) {
+    var response;
+    if (search.length == 0) response = await fetch(urlEvent + "/limit/25");
+    else response = await fetch(urlEvent + "/limit/25/" + search);
     var data = await response.json();
 
     if (!response.ok) return;
@@ -129,4 +128,41 @@ async function updateEventList() {
         eventList.push(newThing = new EventListObject(thing.id, thing.name, thing.time, thing.location, thing.description));
         newThing.createElement();
     });
+}
+
+async function attemptCreateEvent(element) {
+    var formData = new FormData(element);
+
+    const result = await fetch(urlEvent, {
+        method: 'POST',
+        headers: {
+            'Access-Control-Allow-Origin': "*",
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+            name: formData.get("name"),
+            description: formData.get("description"),
+            location: formData.get("location"),
+            time: (formData.get("date") + "T" + formData.get("time"))
+        }),
+        mode: 'cors',
+        signal: AbortSignal.timeout(2000)
+    }).catch(error => {
+        console.log("Error: " + error);
+        return false;
+    });
+
+    if (result.ok) {
+        document.getElementById("form-status-text").innerHTML = "Success!";
+        element.reset();
+        updateEventList(activeSearch);
+    }
+    else document.getElementById("form-status-text").innerHTML = "Error."
+}
+
+function trySearch(element) {
+    if (event.key === "Enter") {
+        activeSearch = element.value;
+        updateEventList(activeSearch);
+    } 
 }

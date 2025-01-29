@@ -10,6 +10,9 @@
     --objectExplorerElement: rgb(240, 240, 240);
     --objectExplorerElementHover: rgb(245, 245, 245);
     --objectExplorerElementChecked: rgb(250, 250, 250);
+
+    --objectCreationForm: rgb(225, 225, 225);
+    --objectCreationFormSecondary: rgb(230, 230, 230);
 }
 
 :root:has(#dark-mode-switch:checked) {
@@ -22,6 +25,9 @@
     --objectExplorerElement: rgb(15, 15, 15);
     --objectExplorerElementHover: rgb(40, 40, 40);
     --objectExplorerElementChecked: rgb(50, 50, 50);
+
+    --objectCreationForm: rgb(25, 25, 25);
+    --objectCreationFormSecondary: rgb(20, 20, 20);
 }
 
 
@@ -30,12 +36,16 @@
     General styling
 */
 
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    height: 100vh;
+    overflow: hidden;
 }
 
 main {
@@ -118,7 +128,6 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
     user-select: none;
 }
 
@@ -127,24 +136,31 @@ h2 {
     cursor: pointer;
 }
 
-/* Search */
+#title-container input:checked + #add-object {
+    background-color: var(--objectExplorerElementChecked);
+}
 
-#search-container {
+#title-container input {
+    display: none;
+}
+
+/* Text inputs w/ icon (search & creation form) */
+
+.input-text-container {
     display: flex;
     gap: 5px;
     width: 100%;
     padding: 5px 10px;
     box-sizing: border-box;
     border-radius: 50px;
-    border: 5px var(--objectExplorerElementChecked);
     background-color: var(--base);
 }
 
-#search-container span {
+.input-text-container span {
     color: var(--baseSecondaryText);
 }
 
-#search {
+.input-text-container input {
     flex-grow: 1;
     border: 0;
     outline: none;
@@ -152,16 +168,21 @@ h2 {
     color: var(--baseText);
 }
 
-#search:active {
+.input-text-container input:active {
     border: 0;
+}
+
+.form-input {
+    background-color: var(--objectCreationForm);
 }
 
 /* General explorer */
 
 #object-explorer-container {
     width: 20%;
-    min-height: 100vh;
+    height: 100vh;
     background-color: var(--objectExplorer);
+    overflow: auto;
 }
 
 #object-explorer {
@@ -215,7 +236,7 @@ h2 {
 }
 
 #object-explorer input:checked + label {
-    left: 25px;
+    left: 5px;
     background-color: var(--objectExplorerElementChecked);
 }
 
@@ -236,4 +257,41 @@ h2 {
 #sync-error:hover {
     color: var(--baseText);
     cursor: pointer;
+}
+
+/* Object creation */
+
+#object-create-container h2 {
+    padding-left: 5px;
+    margin-bottom: 20px;
+}
+
+#object-create-container {
+    display: none;
+}
+
+#object-create-container article label {
+    font-weight: 600;
+    margin: 5px;
+    display: block;
+}
+
+#object-create-form {
+    min-width: 450px;
+}
+
+#object-create-container button {
+    padding:  10px 25px;
+    border-radius: 50px;
+    margin: 20px 5px;
+    background-color: var(--objectCreationForm);
+    color: var(--baseText);
+    transition-duration: 100ms;
+    transition-property: background-color;
+    border: 0;
+}
+
+#object-create-container button:hover {
+    cursor: pointer;
+    background-color: var(--objectCreationFormSecondary);
 }

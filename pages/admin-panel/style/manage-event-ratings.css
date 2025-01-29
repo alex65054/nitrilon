@@ -1,17 +1,16 @@
 /* 
-    Feedback View (right side)
+    Event View
 */
 
-#feedback-view-container {
+#object-view-container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: auto;
     justify-content: center;
     align-items: center;
     gap: 50px;
     text-align: center;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 #feedback-view-individual-containers {
@@ -59,4 +58,26 @@
 
 #feedback-view-individual-containers>div span:hover {
     scale: 1.05;
+}
+
+
+
+/*
+    Event Creation
+*/
+
+#object-create-container {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#object-create-form>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#form-status-text {
+    display: inline-block;
 }

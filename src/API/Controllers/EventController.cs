@@ -26,6 +26,27 @@ namespace API.Controllers
             return Ok(events);
         }
 
+        [HttpGet("limit/{limit}")]
+        public async Task<ActionResult<List<Event>>> GetAllEventsWithLimit(int limit)
+        {
+            var events = await _context.Events.Take(limit).ToListAsync();
+
+            return Ok(events);
+        }
+
+        [HttpGet("limit/{limit}/{search}")]
+        public async Task<ActionResult<List<Event>>> GetFilteredEventsWithLimit(string search, int limit)
+        {
+            search = search.ToLower();
+            var events = await _context.Events.Where(e => 
+            e.Name.ToLower().Contains(search) || 
+            e.Time.ToString().Contains(search) || 
+            e.Location.ToLower().Contains(search)
+            ).Take(limit).ToListAsync();
+
+            return Ok(events);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
