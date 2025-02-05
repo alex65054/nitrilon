@@ -34,17 +34,17 @@
                 <h2>Create member</h2>
                 <div>
                     <article>
-                        <label for="creation-name">First name</label>
+                        <label for="creation-first-name">First name</label>
                         <div class="input-text-container form-input">
                             <span class="material-symbols-rounded">bookmark</span>
-                            <input type="text" name="name" id="creation-name" required>
+                            <input type="text" name="first-name" id="creation-first-name" required>
                         </div>
                     </article>
                     <article>
-                        <label for="creation-name">First name</label>
+                        <label for="creation-last-name">Last name</label>
                         <div class="input-text-container form-input">
                             <span class="material-symbols-rounded">bookmark</span>
-                            <input type="text" name="name" id="creation-name" required>
+                            <input type="text" name="last-name" id="creation-last-name" required>
                         </div>
                     </article>
                 </div>
@@ -56,21 +56,16 @@
                             <input type="date" name="date" id="creation-date" required>
                         </div>
                     </article>
+                    <article>
+                        <label for="creation-membership-type">Membership</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">badge</span>
+                            <select name="membership-type" id="creation-membership-type" required>
+
+                            </select>
+                        </div>
+                    </article>
                 </div>
-                <article>
-                    <label for="creation-location">Event location</label>
-                    <div class="input-text-container form-input">
-                        <span class="material-symbols-rounded">location_on</span>
-                        <input type="text" name="location" id="creation-location" required>
-                    </div>
-                </article>
-                <article>
-                    <label for="creation-description">Event description</label>
-                    <div class="input-text-container form-input">
-                        <span class="material-symbols-rounded">auto_stories</span>
-                        <input type="text" name="description" id="creation-description" required>
-                    </div>
-                </article>
                 <button type="submit">Create</button>
                 <p id="form-status-text"></p>
             </form>

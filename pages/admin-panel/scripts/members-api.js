@@ -1,5 +1,4 @@
-const urlEventRating = "https://localhost:7160/api/EventRating";
-const urlEvent = "https://localhost:7160/api/Event";
+const urlMembers = "https://localhost:7160/api/Event";
 var selectedEvent;
 var memberList;
 
@@ -16,8 +15,8 @@ async function updateObjectView(id) {
 
 async function updateMemberList(search) {
     var response;
-    if (search.length == 0) response = await fetch(urlEvent + "/limit/25");
-    else response = await fetch(urlEvent + "/limit/25/" + search);
+    if (search.length == 0) response = await fetch(urlMembers + "/limit/25");
+    else response = await fetch(urlMembers + "/limit/25/" + search);
     var data = await response.json();
 
     if (!response.ok) return;

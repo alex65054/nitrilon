@@ -160,7 +160,7 @@ h2 {
     color: var(--baseSecondaryText);
 }
 
-.input-text-container input {
+.input-text-container input, .input-text-container select {
     flex-grow: 1;
     border: 0;
     outline: none;
@@ -268,6 +268,11 @@ h2 {
 
 #object-create-container {
     display: none;
+    flex-grow: 1;
+    gap: 100px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 #object-create-container article label {
@@ -294,4 +299,18 @@ h2 {
 #object-create-container button:hover {
     cursor: pointer;
     background-color: var(--objectCreationFormSecondary);
+}
+
+#object-create-form>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#form-status-text {
+    display: inline-block;
+}
+
+
+#object-create-form>div .form-input {
+    width: 220px;
 }

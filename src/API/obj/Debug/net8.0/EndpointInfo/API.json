@@ -862,21 +862,10 @@
         }
       }
     },
-    "/api/MembershipType/{id}": {
+    "/api/MembershipType": {
       "get": {
         "tags": [
           "MembershipType"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -884,25 +873,32 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/MembershipType"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MembershipType"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MembershipType"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MembershipType"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MembershipType"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MembershipType"
+                  }
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/MembershipType": {
+      },
       "post": {
         "tags": [
           "MembershipType"
@@ -1012,6 +1008,46 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MembershipType/{id}": {
+      "get": {
+        "tags": [
+          "MembershipType"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembershipType"
+                }
+              }
+            }
           }
         }
       }
@@ -1157,6 +1193,10 @@
             "type": "string",
             "nullable": true
           },
+          "dateJoined": {
+            "type": "string",
+            "format": "date-time"
+          },
           "contactInfo": {
             "$ref": "#/components/schemas/ContactInfo"
           },
@@ -1184,6 +1224,10 @@
           "lastName": {
             "type": "string",
             "nullable": true
+          },
+          "dateJoined": {
+            "type": "string",
+            "format": "date-time"
           },
           "membershipTypeId": {
             "type": "integer",

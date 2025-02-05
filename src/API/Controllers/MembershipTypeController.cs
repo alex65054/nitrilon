@@ -18,6 +18,14 @@ namespace API.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<MembershipType>>> GetAllMembershipTypes()
+        {
+            var membershipType = await _context.MembershipTypes.ToListAsync();
+
+            return Ok(membershipType);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<MembershipType>> GetMembershipType(int id)
         {
