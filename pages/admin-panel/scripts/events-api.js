@@ -42,7 +42,7 @@ class EventListObject {
         element.appendChild(div);
         element.appendChild(p_Location);
 
-        element.setAttribute("onclick", "selectEvent(this)");
+        element.setAttribute("onclick", "selectObject(this)");
 
         outer.appendChild(element);
     }
@@ -67,17 +67,7 @@ async function isValidEvent(eventId) {
     return false;
 }
 
-function selectEvent(element) {
-    var eventId = element.getAttribute("for").substring(22);
-
-    const url = new URL(window.location.href);
-    url.searchParams.set("id", eventId)
-    if (url != window.location.href) history.pushState({}, "", url);
-    
-    updateFeedbackView(eventId);
-}
-
-async function updateFeedbackView(eventId) {
+async function updateObjectView(eventId) {
     switchViews(false);
     var responses = [];
     var total = 0;
@@ -109,6 +99,10 @@ async function updateFeedbackView(eventId) {
     } else {
         overallDisplayElement.setAttribute("class", "color-red");
     }
+}
+
+function toggleEdit(checked) {
+    
 }
 
 async function updateEventList(search) {
@@ -153,11 +147,13 @@ async function attemptCreateEvent(element) {
     });
 
     if (result.ok) {
-        document.getElementById("form-status-text").innerHTML = "Success!";
+        document.getElementById("create-status-text").innerHTML = "Success!";
         element.reset();
         updateEventList(activeSearch);
+        return true;
     }
-    else document.getElementById("form-status-text").innerHTML = "Error."
+    else document.getElementById("create-status-text").innerHTML = "Error."
+    return false;
 }
 
 function trySearch(element) {
@@ -165,4 +161,24 @@ function trySearch(element) {
         activeSearch = element.value;
         updateEventList(activeSearch);
     } 
+}
+
+async function stateChanged() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let darkMode = urlParams.get("darkMode");
+    if (darkMode != null) document.getElementById("dark-mode-switch").checked = true;
+    else document.getElementById("dark-mode-switch").checked = false;
+
+    let id = urlParams.get("id");
+    if (id != null) {
+        if (await isValidEvent(id)) {
+            document.getElementById("object-selector-label-" + id).checked = true;
+            updateFeedbackView(id);
+        }
+        else {
+            document.getElementById("add-object-input").checked = true;
+            prepareCreateEvent();
+        }
+    }
 }

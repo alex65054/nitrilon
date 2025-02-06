@@ -73,6 +73,32 @@ h2 {
 
 
 
+/* 
+    Navigation
+*/
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    background-color: var(--objectExplorerElementHover);
+}
+
+nav a {
+    color: var(--baseText);
+    text-decoration: none;
+    padding: 5px 20px;
+    background-color: var(--objectExplorerElementHover);
+    transition-duration: 100ms;
+    transition-property: background-color;
+}
+
+nav a:hover, #current-page {
+    background-color: var(--objectExplorerElementChecked);
+}
+
+
+
 /*
     Colors for ratings etc.
 */
@@ -154,6 +180,7 @@ h2 {
     box-sizing: border-box;
     border-radius: 50px;
     background-color: var(--base);
+    align-items: center;
 }
 
 .input-text-container span {
@@ -240,6 +267,45 @@ h2 {
     background-color: var(--objectExplorerElementChecked);
 }
 
+/* Editing */
+
+#edit-submit-container {
+    display: none;
+}
+
+#edit-switch-container:has(#edit-switch:checked) label {
+    display: none;
+}
+
+#edit-switch-container:has(#edit-switch:checked) + form #edit-submit-container {
+    display: block;
+}
+
+#edit-switch {
+    display: none;
+}
+
+#edit-switch-container {
+    position: absolute;
+    top: 25px;
+    right: 5px;
+}
+
+#edit-switch-container label {
+    background-color: var(--objectCreationForm);
+    transition-property: background-color;
+    transition-duration: 100ms;
+}
+
+#edit-switch-container label:hover {
+    background-color: var(--objectCreationFormSecondary);
+    cursor: pointer;
+}
+
+#edit-switch-container p {
+    margin: 0;
+}
+
 /* In case of connection error */
 
 #sync-error {
@@ -259,7 +325,7 @@ h2 {
     cursor: pointer;
 }
 
-/* Object creation */
+/* Object creation & forms */
 
 #object-create-container h2 {
     padding-left: 5px;
@@ -281,11 +347,11 @@ h2 {
     display: block;
 }
 
-#object-create-form {
+form {
     min-width: 450px;
 }
 
-#object-create-container button {
+form button {
     padding:  10px 25px;
     border-radius: 50px;
     margin: 20px 5px;
@@ -296,21 +362,21 @@ h2 {
     border: 0;
 }
 
-#object-create-container button:hover {
+form button:hover {
     cursor: pointer;
     background-color: var(--objectCreationFormSecondary);
 }
 
-#object-create-form>div {
+form>div {
     display: flex;
     justify-content: space-between;
 }
 
-#form-status-text {
+.form-status-text {
     display: inline-block;
 }
 
 
-#object-create-form>div .form-input {
+form>div .form-input {
     width: 220px;
 }

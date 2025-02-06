@@ -18,7 +18,7 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpGet("GetAllEventRatings")]
+        [HttpGet]
         public async Task<ActionResult<List<EventRating>>> GetAllEventRatings()
         {
             var ratings = await _context.EventRatings.ToListAsync();
@@ -26,7 +26,7 @@ namespace API.Controllers
             return Ok(ratings);
         }
 
-        [HttpGet("GetEventRating/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<EventRating>> GetEventRating(int id)
         {
             var rating = await _context.EventRatings.FindAsync(id);

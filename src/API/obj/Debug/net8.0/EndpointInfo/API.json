@@ -455,7 +455,7 @@
         }
       }
     },
-    "/api/EventRating/GetAllEventRatings": {
+    "/api/EventRating": {
       "get": {
         "tags": [
           "EventRating"
@@ -491,9 +491,75 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "EventRating"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventRatingDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventRatingDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventRatingDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRating"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRating"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventRating"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EventRating"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
-    "/api/EventRating/GetEventRating/{id}": {
+    "/api/EventRating/{id}": {
       "get": {
         "tags": [
           "EventRating"
@@ -640,74 +706,6 @@
         }
       }
     },
-    "/api/EventRating": {
-      "post": {
-        "tags": [
-          "EventRating"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EventRatingDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EventRatingDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EventRatingDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EventRating"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EventRating"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EventRating"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "EventRating"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Member/{id}": {
       "get": {
         "tags": [
@@ -741,6 +739,112 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Member"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/limit/{limit}": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Member/limit/{limit}/{search}": {
+      "get": {
+        "tags": [
+          "Member"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
                 }
               }
             }
@@ -1062,9 +1166,6 @@
         ],
         "type": "object",
         "properties": {
-          "member": {
-            "$ref": "#/components/schemas/Member"
-          },
           "memberId": {
             "type": "integer",
             "format": "int32"
@@ -1102,13 +1203,6 @@
           "time": {
             "type": "string",
             "format": "date-time"
-          },
-          "eventRatings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EventRating"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1141,9 +1235,6 @@
           "id": {
             "type": "integer",
             "format": "int32"
-          },
-          "event": {
-            "$ref": "#/components/schemas/Event"
           },
           "eventId": {
             "type": "integer",
@@ -1197,12 +1288,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "contactInfo": {
-            "$ref": "#/components/schemas/ContactInfo"
-          },
-          "membershipType": {
-            "$ref": "#/components/schemas/MembershipType"
-          },
           "membershipTypeId": {
             "type": "integer",
             "format": "int32"
@@ -1245,13 +1330,6 @@
           },
           "name": {
             "type": "string",
-            "nullable": true
-          },
-          "members": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Member"
-            },
             "nullable": true
           }
         },

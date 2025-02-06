@@ -8,17 +8,23 @@
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/manage-members.css">
     <!-- <link rel="icon" href="https://www.nitrilon.dk/wp-content/uploads/2024/02/Dice_Tegnebraet-1-300x300.png" sizes="192x192"> -->
-    <title>Manage Event Ratings</title>
+    <title>Manage Members</title>
 </head>
 <body onload="onLoad()" onpopstate="stateChanged()">
     <input type="checkbox" name="dark-mode" id="dark-mode-switch">
+    <header>
+        <nav>
+            <a id="current-page" href="./manage-members.html">Manage Members</a>
+            <a href="./manage-events.html">Manage Events</a>
+        </nav>
+    </header>
     <main>
         <section id="object-explorer-container">
             <div id="object-explorer-header">
                 <div id="title-container">
                     <h2>Members</h2>
                     <input id="add-object-input" type="radio" name="selected-object"/>
-                    <label id="add-object" for="add-object-input" class="material-symbols-rounded" onclick="prepareCreateEvent()">add</label>
+                    <label id="add-object" for="add-object-input" class="material-symbols-rounded" onclick="prepareCreateObject()">add</label>
                 </div>
                 <div class="input-text-container">
                     <span class="material-symbols-rounded">search</span>
@@ -26,11 +32,11 @@
                 </div>
             </div>
             <div id="object-explorer">
-                <a id="sync-error" class="material-symbols-rounded" onclick="updateEventList()">sync_problem</a>
+                <a id="sync-error" class="material-symbols-rounded" onclick="updateObjectList('')">sync_problem</a>
             </div>
         </section>
         <section id="object-create-container">
-            <form id="object-create-form" onsubmit="attemptCreateEvent(this)" action="javascript:void(0);">
+            <form id="object-create-form" onsubmit="attemptCreateObject(this)" action="javascript:void(0);">
                 <h2>Create member</h2>
                 <div>
                     <article>
@@ -50,10 +56,10 @@
                 </div>
                 <div>
                     <article>
-                        <label for="creation-date">Date joined</label>
+                        <label for="creation-date-joined">Date joined</label>
                         <div class="input-text-container form-input">
                             <span class="material-symbols-rounded">calendar_month</span>
-                            <input type="date" name="date" id="creation-date" required>
+                            <input type="date" name="date-joined" id="creation-date-joined" required>
                         </div>
                     </article>
                     <article>
@@ -66,12 +72,86 @@
                         </div>
                     </article>
                 </div>
+                <article>
+                    <label for="creation-email">Email</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">email</span>
+                        <input type="email" name="email" id="creation-email" required>
+                    </div>
+                </article>
+                <article>
+                    <label for="creation-phone-number">Phone number</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">phone</span>
+                        <input type="tel" name="phone-number" id="creation-phone-number" required>
+                    </div>
+                </article>
                 <button type="submit">Create</button>
-                <p id="form-status-text"></p>
+                <p class="form-status-text" id="create-status-text"></p>
             </form>
         </section>
         <section id="object-view-container">
-            
+            <div id="edit-switch-container">
+                <input type="checkbox" name="edit" id="edit-switch" onchange="toggleEdit(this.checked)">
+                <label for="edit-switch" class="input-text-container">
+                    <span class="material-symbols-rounded">edit</span>
+                    <p>Edit</p>
+                </label>
+            </div>
+            <form onsubmit="attemptEditObject(this)" action="javascript:void(0);" id="object-edit-form">
+                <div>
+                    <article>
+                        <label for="object-view-first-name">First name</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">bookmark</span>
+                            <input type="text" name="first-name" id="object-view-first-name" required disabled>
+                        </div>
+                    </article>
+                    <article>
+                        <label for="object-view-last-name">Last name</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">bookmark</span>
+                            <input type="text" name="last-name" id="object-view-last-name" required disabled>
+                        </div>
+                    </article>
+                </div>
+                <div>
+                    <article>
+                        <label for="object-view-date-joined">Date joined</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">calendar_month</span>
+                            <input type="date" name="date-joined" id="object-view-date-joined" required disabled>
+                        </div>
+                    </article>
+                    <article>
+                        <label for="object-view-membership-type">Membership</label>
+                        <div class="input-text-container form-input">
+                            <span class="material-symbols-rounded">badge</span>
+                            <select name="membership-type" id="object-view-membership-type" required disabled>
+    
+                            </select>
+                        </div>
+                    </article>
+                </div>
+                <article>
+                    <label for="object-view-email">Email</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">email</span>
+                        <input type="email" name="email" id="object-view-email" required disabled>
+                    </div>
+                </article>
+                <article>
+                    <label for="object-view-phone-number">Phone number</label>
+                    <div class="input-text-container form-input">
+                        <span class="material-symbols-rounded">phone</span>
+                        <input type="tel" name="phone-number" id="object-view-phone-number" required disabled>
+                    </div>
+                </article>
+                <div id="edit-submit-container">
+                    <button type="submit">Save</button>
+                    <p class="form-status-text" id="edit-status-text"></p>
+                </div>
+            </form>
         </section>
     </main>
 </body>

@@ -12,13 +12,19 @@
 </head>
 <body onload="onLoad()" onpopstate="stateChanged()">
     <input type="checkbox" name="dark-mode" id="dark-mode-switch">
+    <header>
+        <nav>
+            <a href="./manage-members.html">Manage Members</a>
+            <a id="current-page" href="./manage-events.html">Manage Events</a>
+        </nav>
+    </header>
     <main>
         <section id="object-explorer-container">
             <div id="object-explorer-header">
                 <div id="title-container">
                     <h2>Events</h2>
                     <input id="add-object-input" type="radio" name="selected-object"/>
-                    <label id="add-object" for="add-object-input" class="material-symbols-rounded" onclick="prepareCreateEvent()">add</label>
+                    <label id="add-object" for="add-object-input" class="material-symbols-rounded" onclick="prepareCreateObject()">add</label>
                 </div>
                 <div class="input-text-container">
                     <span class="material-symbols-rounded">search</span>
@@ -26,7 +32,7 @@
                 </div>
             </div>
             <div id="object-explorer">
-                <a id="sync-error" class="material-symbols-rounded" onclick="updateEventList()">sync_problem</a>
+                <a id="sync-error" class="material-symbols-rounded" onclick="updateEventList('')">sync_problem</a>
             </div>
         </section>
         <section id="object-create-container">
@@ -64,7 +70,7 @@
                     </div>
                 </article>
                 <button type="submit">Create</button>
-                <p id="form-status-text"></p>
+                <p class="form-status-text" id="create-status-text"></p>
             </form>
         </section>
         <section id="object-view-container">
