@@ -30,6 +30,10 @@ namespace API.Data
                 .HasOne(e => e.Member)
                 .WithOne(e => e.ContactInfo)
                 .HasForeignKey<ContactInfo>(e => e.MemberId);
+
+            modelBuilder.Entity<Role>()
+                .HasMany(e => e.Members)
+                .WithMany(e => e.Roles);
         }
 
         public DbSet<Event> Events { get; set; }
