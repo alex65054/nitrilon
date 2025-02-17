@@ -31,9 +31,9 @@ namespace API.Data
                 .WithOne(e => e.ContactInfo)
                 .HasForeignKey<ContactInfo>(e => e.MemberId);
 
-            modelBuilder.Entity<Role>()
+            modelBuilder.Entity<Campaign>()
                 .HasMany(e => e.Members)
-                .WithMany(e => e.Roles);
+                .WithMany(e => e.Campaigns);
         }
 
         public DbSet<Event> Events { get; set; }
@@ -41,5 +41,6 @@ namespace API.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<MembershipType> MembershipTypes { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
     }
 }

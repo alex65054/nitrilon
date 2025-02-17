@@ -13,7 +13,7 @@ namespace API.Entities
         [JsonIgnore]
         public MembershipType? MembershipType { get; set; }
         [JsonIgnore]
-        public ICollection<Role> Roles { get; set; }
+        public ICollection<Campaign>? Campaigns { get; set; }
         public int MembershipTypeId { get; set; }
 
     }
