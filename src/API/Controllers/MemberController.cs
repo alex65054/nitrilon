@@ -42,11 +42,27 @@ namespace API.Controllers
             var members = await _context.Members.Where(e =>
             e.FirstName.ToLower().Contains(search) ||
             e.LastName.ToString().Contains(search) ||
-            e.ContactInfo.PhoneNumber.Contains(search) ||
-            e.ContactInfo.Email.Contains(search)
+            (e.ContactInfo != null &&
+            (e.ContactInfo.PhoneNumber.Contains(search) ||
+            e.ContactInfo.Email.ToLower().Contains(search)))
             ).Take(limit).ToListAsync();
 
             return Ok(members);
+        }
+
+        [HttpGet("ParticipantsOfCampaign/{id}")]
+        public async Task<ActionResult<List<Member>>> GetAllMembersOfCampaign(int id)
+        {
+            var Campaign = await _context.Campaigns.FindAsync(id);
+
+            if (Campaign == null) return BadRequest("No such campaign.");
+
+            var Members = _context.Members.Where(e => (
+            e.Campaigns != null && 
+            e.Campaigns.Contains(Campaign))
+            ).ToListAsync();
+
+            return Ok(Members);
         }
 
         [HttpPost]

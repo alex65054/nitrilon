@@ -1,37 +1,14 @@
 const urlMember = "https://localhost:7160/api/Member";
 const urlMembershipType = "https://localhost:7160/api/MembershipType";
 const urlContactInfo = "https://localhost:7160/api/ContactInfo";
-var membershipTypes;
+var membershipTypes = [];
 var selectedObject;
-var memberList;
 var activeSearch = "";
 
-async function onLoad() {
+
+async function initialize() {
     resetCreationDate()
     await updateMembershipDropdown();
-    await updateObjectList("");
-
-    stateChanged();
-}
-
-async function stateChanged() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    let darkMode = urlParams.get("darkMode");
-    if (darkMode != null) document.getElementById("dark-mode-switch").checked = true;
-    else document.getElementById("dark-mode-switch").checked = false;
-
-    let id = urlParams.get("id");
-    if (id != null) {
-        if (await isValidObject(id)) {
-            document.getElementById("object-selector-label-" + id).checked = true;
-            updateObjectView(id);
-        }
-        else {
-            document.getElementById("add-object-input").checked = true;
-            prepareCreateObject();
-        }
-    }
 }
 
 async function updateMembershipDropdown() {
@@ -85,8 +62,6 @@ async function updateObjectView(id) {
     }
     document.getElementById("object-view-email").value = email;
     document.getElementById("object-view-phone-number").value = phoneNumber;
-    
-
 }
 
 async function updateObjectList(search) {
@@ -97,66 +72,11 @@ async function updateObjectList(search) {
 
     if (!response.ok) return;
 
-    eventList = [];
-
     document.getElementById("object-explorer").innerHTML = "";
 
     data.forEach(thing => {
-        let newThing;
-        eventList.push(newThing = new ObjectListElement(thing.id, thing.firstName, thing.lastName, thing.dateJoined, thing.membershipTypeId));
-        newThing.createElement();
+        createElementInObjectList(thing.id, thing.firstName + " " + thing.lastName, thing.dateJoined, membershipTypes.get(this.membershipTypeId));
     });
-}
-
-function trySearch(element) {
-    if (event.key === "Enter") {
-        activeSearch = element.value;
-        updateObjectList(activeSearch);
-    } 
-}
-
-class ObjectListElement {
-    constructor(id, firstName, lastName, dateJoined, membershipTypeId) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.date = new Date(dateJoined);
-        this.membershipTypeId = membershipTypeId;
-    }
-
-    createElement() {
-        var outer = document.getElementById("object-explorer");
-
-        var input = document.createElement("input");
-        input.type = "radio";
-        input.name = "selected-object";
-        input.id = "object-selector-label-" + this.id;
-
-        outer.appendChild(input);
-
-        var element = document.createElement("label");
-
-        element.setAttribute("for", input.id);
-
-        var div = document.createElement("div");
-        var h6_Name = document.createElement("h6");
-        var p_Date = document.createElement("p");
-        var p_LowerText = document.createElement("p");
-
-        h6_Name.innerHTML = this.firstName + " " + this.lastName;
-        p_Date.innerHTML = this.date.getFullYear() + "/" + (this.date.getMonth()+1) + "/" + this.date.getDate();
-        p_LowerText.innerHTML = membershipTypes.get(this.membershipTypeId);
-
-        div.appendChild(h6_Name);
-        div.appendChild(p_Date);
-
-        element.appendChild(div);
-        element.appendChild(p_LowerText);
-
-        element.setAttribute("onclick", "selectObject(this)");
-
-        outer.appendChild(element);
-    }
 }
 
 function toggleEdit(checked) {
@@ -173,21 +93,8 @@ function toggleEdit(checked) {
     setEnabled("object-view-phone-number", checked);
 }
 
-function setEnabled(id, enabled) {
-    enabled ? document.getElementById(id).removeAttribute("disabled") : document.getElementById(id).setAttribute("disabled", true);
-}
-
 async function isValidObject(id) {
-    if (id > 0) {
-        const result = await fetch(urlMember + "/" + id, {
-            signal: AbortSignal.timeout(2000)
-        }).catch((error) => {
-            console.log("Error: " + error);
-            return false;
-        });
-        if (result.ok) return true;
-    }
-    return false;
+    return await checkValidity(id, urlMember);
 }
 
 async function attemptCreateObject(element) {
@@ -258,13 +165,6 @@ async function attemptAlterObject(element, method, id, reset) {
             return true;
         } else return false;
     }
-}
-
-function trySearch(element) {
-    if (event.key === "Enter") {
-        activeSearch = element.value;
-        updateObjectList(activeSearch);
-    } 
 }
 
 function resetCreationDate() {

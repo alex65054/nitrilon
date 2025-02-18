@@ -59,13 +59,37 @@ namespace API.Controllers
             return Ok(Campaigns);
         }
 
+        [HttpGet("limit/{limit}")]
+        public async Task<ActionResult<List<Campaign>>> GetAllCampaignsWithLimit(int limit)
+        {
+            var campaigns = await _context.Campaigns.Take(limit).ToListAsync();
+
+            return Ok(campaigns);
+        }
+
+        [HttpGet("limit/{limit}/{search}")]
+        public async Task<ActionResult<List<Campaign>>> GetFilteredCampaignsWithLimit(string search, int limit)
+        {
+            search = search.ToLower();
+            var campaigns = await _context.Campaigns.Where(e =>
+            e.Name.ToLower().Contains(search) ||
+            e.Description.ToLower().Contains(search) ||
+            e.DateCreated.ToString().Contains(search) ||
+            e.GameMaster.ToLower().Contains(search)
+            ).Take(limit).ToListAsync();
+
+            return Ok(campaigns);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Campaign>> AddCampaign(CapaignDTO newCampaign)
         {
             var Campaign = new Campaign
             {
                 Name = newCampaign.Name,
-                Description = newCampaign.Description
+                Description = newCampaign.Description,
+                GameMaster = newCampaign.GameMaster,
+                DateCreated = DateTime.Now
             };
 
             _context.Campaigns.Add(Campaign);

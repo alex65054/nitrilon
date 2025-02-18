@@ -3,6 +3,7 @@
     public class CapaignDTO
     {
         public string Name { get; set; }
+        public string GameMaster { get; set; }
         public string Description { get; set; }
     }
 }

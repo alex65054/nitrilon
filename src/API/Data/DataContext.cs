@@ -32,7 +32,7 @@ namespace API.Data
                 .HasForeignKey<ContactInfo>(e => e.MemberId);
 
             modelBuilder.Entity<Campaign>()
-                .HasMany(e => e.Members)
+                .HasMany(e => e.Participants)
                 .WithMany(e => e.Campaigns);
         }
 
